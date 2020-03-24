@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible">
+  <link rel="stylesheet" href="/static/css/terminal.min.css" />
+  <title>Hola :)</title>
+
+  <style>
+    .components-grid {
+      display: grid;
+      grid-column-gap: 1.4em;
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-rows: auto;
+      display: grid;
+      grid-gap: 1em;
+      grid-template-rows: auto;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(calc(var(--page-width) / 12), 1fr)
+      );
+    }
+
+    @media only screen and (min-width: 70em) {
+      .components-grid {
+        grid-template-columns: 3fr 9fr;
+      }
+    }
+  </style>
+
+    <style>
+      :root {
+        --global-font-size: 15px;
+        --global-line-height: 1.4em;
+        --global-space: 10px;
+        --font-stack: Menlo, Monaco, Lucida Console, Liberation Mono,
+          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
+          serif;
+        --mono-font-stack: Menlo, Monaco, Lucida Console, Liberation Mono,
+          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
+          serif;
+        --background-color: #222225;
+        --page-width: 60em;
+        --font-color: #e8e9ed;
+        --invert-font-color: #222225;
+        --secondary-color: #a3abba;
+        --tertiary-color: #a3abba;
+        --primary-color: #62c4ff;
+        --error-color: #ff3c74;
+        --progress-bar-background: #3f3f44;
+        --progress-bar-fill: #62c4ff;
+        --code-bg-color: #3f3f44;
+        --input-style: solid;
+        --display-h1-decoration: none;
+      }
+
+      #form {   
+        margin: auto;
+        width: 50%;
+        padding: 10px; 
+      }
+
+      @media only screen and (max-width: 600px) {
+        #form {
+          width: 90%
+        }
+      }
+    </style>
+</head>
+
+<body>
+  <br>
+  <div id="form">
+    <header><h2 id="Forms">Hola :)</h2></header>
+    <div class="form-group">
+      <fieldset>
+        <ul id="messages"></ul>
+        <legend>Platica algo</legend>
+          <input id="myMessage" name="user" type="text"/>
+        
+        <div class="form-group" style="text-align: right">
+          <br>
+          <button class="btn btn-default" type="login" role="button" name="login" id="send">Enviar</button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <script
+    src="http://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script>
+    const socket = io()
+
+    socket.on('message', function(msg) {
+      if (!msg) return false
+      $('#messages').append('<li>' + msg + '</li>')
+    })
+    $('#send').on('click', function() {
+      socket.send($('#myMessage').val());
+    $('#myMessage').val('');
+    })
+</script>
+</body>
+</html>
